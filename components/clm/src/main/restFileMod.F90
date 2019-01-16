@@ -59,6 +59,7 @@ module restFileMod
   use BeTRSimulationALM    , only : betr_simulation_alm_type
   use CropType             , only : crop_type
   use ColumnDataType       , only : col_es
+  use VegetationDataType   , only : veg_es
   !
   ! !PUBLIC TYPES:
   implicit none
@@ -199,6 +200,8 @@ contains
     
     call col_es%restart (bounds, ncid, flag='define')
 
+    call veg_es%restart (bounds, ncid, flag='define')
+
     call waterstate_vars%restart (bounds, ncid, flag='define', &
          watsat_col=soilstate_vars%watsat_col(bounds%begc:bounds%endc,:)) 
 
@@ -308,6 +311,8 @@ contains
     call waterflux_vars%restart (bounds, ncid, flag='write')
     
     call col_es%restart (bounds, ncid, flag='write')
+
+    call veg_es%restart (bounds, ncid, flag='write')
 
     call waterstate_vars%restart (bounds, ncid, flag='write',  &
          watsat_col=soilstate_vars%watsat_col(bounds%begc:bounds%endc,:) )
@@ -518,6 +523,8 @@ contains
     call waterflux_vars%restart (bounds, ncid, flag='read')
     
     call col_es%restart (bounds, ncid, flag='read')
+
+    call veg_es%restart (bounds, ncid, flag='read')
 
     call waterstate_vars%restart (bounds, ncid,  flag='read', &
          watsat_col=soilstate_vars%watsat_col(bounds%begc:bounds%endc,:) )
