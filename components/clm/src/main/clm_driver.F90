@@ -130,6 +130,7 @@ module clm_driver
   use ColumnType             , only : col_pp 
   use ColumnDataType         , only : col_es  
   use VegetationType         , only : veg_pp
+  use VegetationDataType     , only : veg_es
   use shr_sys_mod            , only : shr_sys_flush
   use shr_log_mod            , only : errMsg => shr_log_errMsg
 
@@ -1303,6 +1304,8 @@ contains
        call top_af%UpdateAccVars(bounds_proc)
        
        call temperature_vars%UpdateAccVars(bounds_proc)
+       
+       call veg_es%UpdateAccVars(bounds_proc)
        
        call canopystate_vars%UpdateAccVars(bounds_proc)
        
