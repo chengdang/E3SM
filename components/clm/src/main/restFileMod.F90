@@ -197,8 +197,6 @@ contains
 
     call solarabs_vars%restart (bounds, ncid, flag='define')
 
-    call temperature_vars%restart (bounds, ncid, flag='define')
-
     call waterflux_vars%restart (bounds, ncid, flag='define')
     
     call lun_es%Restart (bounds, ncid, flag='define')
@@ -312,8 +310,6 @@ contains
     call soilstate_vars%restart (bounds, ncid, flag='write')
 
     call solarabs_vars%restart (bounds, ncid, flag='write')
-
-    call temperature_vars%restart (bounds, ncid, flag='write')
 
     call waterflux_vars%restart (bounds, ncid, flag='write')
     
@@ -528,8 +524,6 @@ contains
     call soilstate_vars%restart (bounds, ncid, flag='read')
 
     call solarabs_vars%restart (bounds, ncid, flag='read')
-
-    call temperature_vars%restart (bounds, ncid, flag='read')
 
     call waterflux_vars%restart (bounds, ncid, flag='read')
     

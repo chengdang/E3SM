@@ -625,8 +625,6 @@ contains
     
     call top_af%InitAccBuffer(bounds_proc)
 
-    call temperature_vars%initAccBuffer(bounds_proc)
-    
     call veg_es%InitAccBuffer(bounds_proc)
 
     call canopystate_vars%initAccBuffer(bounds_proc)
@@ -847,7 +845,6 @@ contains
     call atm2lnd_vars%initAccVars(bounds_proc)
     call top_as%InitAccVars(bounds_proc)
     call top_af%InitAccVars(bounds_proc)
-    call temperature_vars%initAccVars(bounds_proc)
     call veg_es%InitAccVars(bounds_proc)
     call canopystate_vars%initAccVars(bounds_proc)
     if (use_cndv) then
