@@ -24,6 +24,7 @@ module CNRootDynMod
   use CropType            , only : crop_type
   use SimpleMathMod       , only : array_normalization
   use RootBiophysMod      , only : init_vegrootfr
+  use VegetationDataType  , only : veg_ef
 
   ! !PUBLIC TYPES:
   implicit none

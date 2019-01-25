@@ -60,7 +60,7 @@ module restFileMod
   use CropType             , only : crop_type
   use LandunitDataType     , only : lun_es
   use ColumnDataType       , only : col_es, col_ef
-  use VegetationDataType   , only : veg_es
+  use VegetationDataType   , only : veg_es, veg_ef
   !
   ! !PUBLIC TYPES:
   implicit none
@@ -185,6 +185,8 @@ contains
 
     call col_ef%Restart (bounds, ncid, flag='define')
 
+    call veg_ef%Restart (bounds, ncid, flag='define')
+
     call frictionvel_vars% restart (bounds, ncid, flag='define')
 
     call lakestate_vars%restart (bounds, ncid, flag='define')
@@ -298,6 +300,8 @@ contains
     call energyflux_vars%restart (bounds, ncid, flag='write')
 
     call col_ef%Restart (bounds, ncid, flag='write')
+
+    call veg_ef%Restart (bounds, ncid, flag='write')
 
     call frictionvel_vars% restart (bounds, ncid, flag='write')
 
@@ -512,6 +516,8 @@ contains
     call energyflux_vars%restart (bounds, ncid, flag='read')
 
     call col_ef%Restart (bounds, ncid, flag='read')
+
+    call veg_ef%Restart (bounds, ncid, flag='read')
 
     call frictionvel_vars% restart (bounds, ncid, flag='read')
 
