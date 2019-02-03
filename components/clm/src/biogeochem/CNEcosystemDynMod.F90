@@ -682,14 +682,14 @@ contains
           call CIsoFlux1(num_soilc, filter_soilc, num_soilp, filter_soilp, &
                cnstate_vars, carbonflux_vars, carbonstate_vars, &
                isotopeflux_vars=c13_carbonflux_vars, isotopestate_vars=c13_carbonstate_vars, &
-               isotope='c13', isocol_cs=c13_col_cs)
+               isotope='c13', isocol_cs=c13_col_cs, isoveg_cs=c13_veg_cs)
        end if
 
        if ( use_c14 ) then
           call CIsoFlux1(num_soilc, filter_soilc, num_soilp, filter_soilp, &
                cnstate_vars, carbonflux_vars, carbonstate_vars, &
                isotopeflux_vars=c14_carbonflux_vars, isotopestate_vars=c14_carbonstate_vars, &
-               isotope='c14', isocol_cs=c14_col_cs)
+               isotope='c14', isocol_cs=c14_col_cs, isoveg_cs=c14_veg_cs)
        end if
 
        call CStateUpdate1(bounds, num_soilc, filter_soilc, num_soilp, filter_soilp, &
@@ -739,14 +739,14 @@ contains
           call CIsoFlux2(num_soilc, filter_soilc, num_soilp, filter_soilp, &
                cnstate_vars, carbonflux_vars, carbonstate_vars, &
                isotopeflux_vars=c13_carbonflux_vars, isotopestate_vars=c13_carbonstate_vars, &
-               isotope='c13', isocol_cs=c13_col_cs)
+               isotope='c13', isocol_cs=c13_col_cs, isoveg_cs=c13_veg_cs)
        end if
 
        if ( use_c14 ) then
           call CIsoFlux2(num_soilc, filter_soilc, num_soilp, filter_soilp, &
                cnstate_vars, carbonflux_vars, carbonstate_vars, &
                isotopeflux_vars=c14_carbonflux_vars, isotopestate_vars=c14_carbonstate_vars, &
-               isotope='c14', isocol_cs=c14_col_cs)
+               isotope='c14', isocol_cs=c14_col_cs, isoveg_cs=c14_veg_cs)
        end if
 
        call CStateUpdate2( num_soilc, filter_soilc, num_soilp, filter_soilp, &
@@ -776,13 +776,13 @@ contains
           call CIsoFlux2h(num_soilc, filter_soilc, num_soilp, filter_soilp, &
                cnstate_vars, carbonflux_vars, carbonstate_vars, &
                isotopeflux_vars=c13_carbonflux_vars, isotopestate_vars=c13_carbonstate_vars, &
-               isotope='c13', isocol_cs=c13_col_cs)
+               isotope='c13', isocol_cs=c13_col_cs, isoveg_cs=c13_veg_cs)
        end if
        if ( use_c14 ) then
           call CIsoFlux2h(num_soilc, filter_soilc, num_soilp, filter_soilp, &
                cnstate_vars, carbonflux_vars, carbonstate_vars, &
                isotopeflux_vars=c14_carbonflux_vars, isotopestate_vars=c14_carbonstate_vars, &
-               isotope='c14', isocol_cs=c14_col_cs)
+               isotope='c14', isocol_cs=c14_col_cs, isoveg_cs=c14_veg_cs)
        end if
 
        call CStateUpdate2h( num_soilc, filter_soilc,  num_soilp, filter_soilp, &
@@ -830,13 +830,13 @@ contains
           call CIsoFlux3(num_soilc, filter_soilc, num_soilp, filter_soilp, &
                cnstate_vars, carbonflux_vars, carbonstate_vars, &
                isotopeflux_vars=c13_carbonflux_vars, isotopestate_vars=c13_carbonstate_vars, &
-               isotope='c13', isocol_cs=c13_col_cs)
+               isotope='c13', isocol_cs=c13_col_cs, isoveg_cs=c13_veg_cs)
        end if
        if ( use_c14 ) then
           call CIsoFlux3(num_soilc, filter_soilc, num_soilp, filter_soilp, &
                cnstate_vars, carbonflux_vars, carbonstate_vars, &
                isotopeflux_vars=c14_carbonflux_vars, isotopestate_vars=c14_carbonstate_vars, &
-               isotope='c14', isocol_cs=c14_col_cs)
+               isotope='c14', isocol_cs=c14_col_cs, isoveg_cs=c14_veg_cs)
        end if
 
        call CStateUpdate3( num_soilc, filter_soilc, num_soilp, filter_soilp, &

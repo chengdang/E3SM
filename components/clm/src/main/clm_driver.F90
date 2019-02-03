@@ -318,6 +318,7 @@ contains
           call phosphorusflux_vars%ZeroDWT(bounds_clump)
 
           call carbonstate_vars%ZeroDWT(bounds_clump)
+          call veg_cs%ZeroDwt(bounds_clump)
           call nitrogenstate_vars%ZeroDWT(bounds_clump)
           call phosphorusstate_vars%ZeroDWT(bounds_clump)
 
