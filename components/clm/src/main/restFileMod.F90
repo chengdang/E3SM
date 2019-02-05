@@ -62,6 +62,7 @@ module restFileMod
   use LandunitDataType     , only : lun_es, lun_ws
   use ColumnDataType       , only : col_es, col_ef, col_ws, col_wf
   use ColumnDataType       , only : col_cs, c13_col_cs, c14_col_cs
+  use ColumnDataType       , only : col_cf, c13_col_cf, c14_col_cf
   use VegetationDataType   , only : veg_es, veg_ef, veg_ws, veg_wf
   use VegetationDataType   , only : veg_cs, c13_veg_cs, c14_veg_cs
   use VegetationDataType   , only : veg_cf, c13_veg_cf, c14_veg_cf
@@ -260,7 +261,6 @@ contains
                c12_veg_cs=veg_cs, cnstate_vars=cnstate_vars)
        end if
 
-       call carbonflux_vars%restart(bounds, ncid, flag='define')
        call col_cf%Restart(bounds, ncid, flag='define')
        call veg_cf%Restart(bounds, ncid, flag='define')
        
@@ -292,7 +292,6 @@ contains
           call c14_veg_cs%restart(bounds, ncid, flag='define', carbon_type='c14', &
                c12_veg_cs=veg_cs, cnstate_vars=cnstate_vars)
        end if
-       call carbonflux_vars%restart(bounds, ncid, flag='define')
        call col_cf%Restart(bounds, ncid, flag='define')
        call veg_cf%Restart(bounds, ncid, flag='define')
 
@@ -408,7 +407,6 @@ contains
 	            cnstate_vars=cnstate_vars )
        end if
 
-       call carbonflux_vars%restart(bounds, ncid, flag='write')
        call col_cf%Restart(bounds, ncid, flag='write')
        call veg_cf%Restart(bounds, ncid, flag='write')
 
@@ -443,7 +441,6 @@ contains
                c12_veg_cs=veg_cs, carbon_type='c14', &
 	            cnstate_vars=cnstate_vars )
        end if
-       call carbonflux_vars%restart(bounds, ncid, flag='write')
        call col_cf%Restart(bounds, ncid, flag='write')
        call veg_cf%Restart(bounds, ncid, flag='write')
 
@@ -657,7 +654,6 @@ contains
 	            cnstate_vars=cnstate_vars)
        end if
 
-       call carbonflux_vars%restart(bounds, ncid, flag='read')
        call col_cf%Restart(bounds, ncid, flag='read')
        call veg_cf%Restart(bounds, ncid, flag='read')
 
@@ -692,7 +688,6 @@ contains
                c12_veg_cs=veg_cs, carbon_type='c14', &
 	            cnstate_vars=cnstate_vars)
        end if
-       call carbonflux_vars%restart(bounds, ncid, flag='read')
        call col_cf%Restart(bounds, ncid, flag='read')
        call veg_cf%Restart(bounds, ncid, flag='read')
 
