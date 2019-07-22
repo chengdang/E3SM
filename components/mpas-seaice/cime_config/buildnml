@@ -631,6 +631,9 @@ if ( -e "$CASEROOT/SourceMods/src.mpassi/$STREAM_NAME" ) {
         print $stream_file '    <var name="bareIceAlbedoCategory"/>' . "\n";
         print $stream_file '    <var name="snowAlbedoCategory"/>' . "\n";
         print $stream_file '    <var name="pondAlbedoCategory"/>' . "\n";
+        print $stream_file '    <var name="bareIceAlbedoCell"/>' . "\n";
+        print $stream_file '    <var name="snowAlbedoCell"/>' . "\n";
+        print $stream_file '    <var name="pondAlbedoCell"/>' . "\n";
         print $stream_file '    <var name="effectivePondAreaCategory"/>' . "\n";
         print $stream_file '    <var name="effectivePondAreaCell"/>' . "\n";
         print $stream_file '    <var name="snowFractionCategory"/>' . "\n";
@@ -651,7 +654,9 @@ if ( -e "$CASEROOT/SourceMods/src.mpassi/$STREAM_NAME" ) {
 	print $stream_file '	<var name="oceanSaltFlux"/>' . "\n";
 	print $stream_file '	<var name="uAirVelocity"/>' . "\n";
 	print $stream_file '	<var name="vAirVelocity"/>' . "\n";
-        if ( $ICE_BGC eq 'ice_bgc' ) {
+        print $stream_file '    <var name="pondAreaCell"/>' . "\n";
+        print $stream_file '    <var name="pondDepthCell"/>' . "\n";        
+          if ( $ICE_BGC eq 'ice_bgc' ) {
                 print $stream_file '    <var name="totalVerticalBiologyIce"/>' . "\n";
                 print $stream_file '    <var name="totalChlorophyll"/>' . "\n";
                 print $stream_file '    <var name="totalNitrate"/>' . "\n";

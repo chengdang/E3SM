@@ -1642,8 +1642,11 @@ contains
      ! radiative transfer models for unified treatment of cryospheric surfaces
      ! in ESMs, in review, 2019
      !
-     ! If using this subroutine, snow on land and snow on sea ice will be treated
-     ! using the same model for their solar radiative properties.
+     ! To use this subtroutine, set use_snicar_ad = true in CLM
+     ! 
+     ! if config_use_snicar_ad = true in MPAS-seaice
+     ! Snow on land and snow on sea ice will be treated
+     ! with the same model for their solar radiative properties.
      !
      ! The inputs and outputs are the same to subroutine SNICAR_RT
      !
@@ -1689,17 +1692,17 @@ contains
      real(r8):: asm_prm_aer_lcl(sno_nbr_aer)       ! asymmetry parameter of aerosol species (aer_nbr) [frc]
      real(r8):: ext_cff_mss_aer_lcl(sno_nbr_aer)   ! mass extinction coefficient of aerosol species (aer_nbr) [m2/kg]
 
-   #ifdef MODAL_AER
+#ifdef MODAL_AER
      !mgf++
      real(r8) :: rds_bcint_lcl(-nlevsno+1:0)       ! effective radius of within-ice BC [nm]
      real(r8) :: rds_bcext_lcl(-nlevsno+1:0)       ! effective radius of external BC [nm]
      !mgf--
-   #endif
+#endif
 
 
      ! Other local variables
-     ! integer :: DELTA                              ! flag to use Delta approximation (Joseph, 1976)
-     !                                               ! (1= use, 0= don't use)
+     integer :: DELTA                              ! flag to use Delta approximation (Joseph, 1976)
+                                                   ! (1= use, 0= don't use)
      real(r8):: flx_wgt(1:numrad_snw)              ! weights applied to spectral bands,
                                                    ! specific to direct and diffuse cases (bnd) [frc]
      integer :: flg_nosnl                          ! flag: =1 if there is snow, but zero snow layers,
@@ -1756,7 +1759,7 @@ contains
      real(r8):: pi                                 ! 3.1415...
 
      ! SNICAR_AD new variables, follow sea-ice shortwave conventions
-     real(r8) :: &
+     real(r8):: &
         trndir(-nlevsno+1:1)  , & ! solar beam down transmission from top
         trntdr(-nlevsno+1:1)  , & ! total transmission to direct beam for layers above
         trndif(-nlevsno+1:1)  , & ! diffuse transmission to diffuse beam for layers above
@@ -1767,7 +1770,7 @@ contains
         dfdif(-nlevsno+1:1)   , & ! down-up flux at interface due to diffuse beam at top surface
         dftmp(-nlevsno+1:1)       ! temporary variable for down-up flux at interface
 
-     real(r8) :: &
+     real(r8):: &
         rdir(-nlevsno+1:0)       , & ! layer reflectivity to direct radiation
         rdif_a(-nlevsno+1:0)     , & ! layer reflectivity to diffuse radiation from above
         rdif_b(-nlevsno+1:0)     , & ! layer reflectivity to diffuse radiation from below
@@ -1786,6 +1789,7 @@ contains
          amg      , & ! alp - gam
          apg      , & ! alp + gam
          ue       , & ! temporary for u
+         refk     , & ! interface multiple scattering
          refkp1   , & ! interface multiple scattering for k+1
          refkm1   , & ! interface multiple scattering for k-1
          tdrrdir  , & ! direct tran times layer direct ref
@@ -1830,20 +1834,23 @@ contains
      integer :: &
          ng             , & ! gaussian integration index
          snl_btm_itf    , & ! index of bottom snow layer interfaces (1) [idx]
-         ngmax = 8      , & ! gaussian integration index
+         ngmax = 8          ! gaussian integration index
 
      ! Gaussian integration angle and coefficients
-     real(r8), dimension(8), parameter :: &
-         gauspt     & ! gaussian angles (radians)
-           = (/ .9894009_dbl_kind,  .9445750_dbl_kind, &
-                .8656312_dbl_kind,  .7554044_dbl_kind, &
-                .6178762_dbl_kind,  .4580168_dbl_kind, &
-                .2816036_dbl_kind,  .0950125_dbl_kind/), &
-         gauswt     & ! gaussian weights
-           = (/ .0271525_dbl_kind,  .0622535_dbl_kind, &
-                .0951585_dbl_kind,  .1246290_dbl_kind, &
-                .1495960_dbl_kind,  .1691565_dbl_kind, &
-                .1826034_dbl_kind,  .1894506_dbl_kind/)
+     real(r8) :: &
+         difgauspt(1:8)  , &
+         difgauswt(1:8)
+     ! real(r8),  dimension (1:8) :: &
+     !     dif_gauspt     & ! gaussian angles (radians)
+     !       = (/ 0.9894009_r8,  0.9445750_r8, &
+     !            0.8656312_r8,  0.7554044_r8, &
+     !            0.6178762_r8,  0.4580168_r8, &
+     !            0.2816036_r8,  0.0950125_r8/) , &
+     !     dif_gauswt     & ! gaussian weights
+     !       = (/ 0.0271525_r8,  0.0622535_r8, &
+     !            0.0951585_r8,  0.1246290_r8, &
+     !            0.1495960_r8,  0.1691565_r8, &
+     !            0.1826034_r8,  0.1894506_r8/)
 
      ! constants used in algorithm
      real(r8) :: &
@@ -1857,7 +1864,7 @@ contains
          cp75    = 0.75_r8    , &
          c1p5    = 1.5_r8     , &
          trmin   = 0.001_r8   , &
-         argmax  = 10.0_r8    , & ! maximum argument of exponential
+         argmax  = 10.0_r8       ! maximum argument of exponential
 
      ! cconstant coefficients used for SZA parameterization
      real(r8) :: &
@@ -1867,32 +1874,34 @@ contains
          sza_b0 =  1.467291_r8 , &
          sza_b1 = -3.338043_r8 , &
          sza_b2 =  6.807489_r8 , &
+         puny   =  1.0e-11_r8  , &
          mu_75  =  0.2588_r8       ! cosine of 75 degree
 
      ! coefficients used for SZA parameterization
      real(r8) :: &
-         sza_c1       , & ! coefficient, SZA parameteirzation
-         sza_c0       , & ! coefficient, SZA parameterization
-         sza_factor   , & ! factor used to adjust NIR direct albedo
-         mu0              ! incident solar zenith angle
+         sza_c1          , & ! coefficient, SZA parameteirzation
+         sza_c0          , & ! coefficient, SZA parameterization
+         sza_factor      , & ! factor used to adjust NIR direct albedo
+         flx_sza_adjust  , & ! direct NIR flux adjustment from sza_factor
+         mu0                 ! incident solar zenith angle
 
      ! Delta-Eddington solution expressions
-     alpha(w,uu,gg,e) = p75*w*uu*((c1 + gg*(c1-w))/(c1 - e*e*uu*uu))
-     agamm(w,uu,gg,e) = p5*w*((c1 + c3*gg*(c1-w)*uu*uu)/(c1-e*e*uu*uu))
-     n(uu,et)         = ((uu+c1)*(uu+c1)/et ) - ((uu-c1)*(uu-c1)*et)
-     u(w,gg,e)        = c1p5*(c1 - w*gg)/e
-     el(w,gg)         = sqrt(c3*(c1-w)*(c1 - w*gg))
+     ! alpha(w,uu,gg,e) = p75*w*uu*((c1 + gg*(c1-w))/(c1 - e*e*uu*uu))
+     ! agamm(w,uu,gg,e) = p5*w*((c1 + c3*gg*(c1-w)*uu*uu)/(c1-e*e*uu*uu))
+     ! n(uu,et)         = ((uu+c1)*(uu+c1)/et ) - ((uu-c1)*(uu-c1)*et)
+     ! u(w,gg,e)        = c1p5*(c1 - w*gg)/e
+     ! el(w,gg)         = sqrt(c3*(c1-w)*(c1 - w*gg))
 
      !-----------------------------------------------------------------------
-   #ifdef MODAL_AER
-     !mgf++
-     integer :: idx_bcint_icerds                  ! index of ice effective radius for optical properties lookup table
-     integer :: idx_bcint_nclrds                  ! index of within-ice BC effective radius for optical properties lookup table
-     integer :: idx_bcext_nclrds                  ! index of external BC effective radius for optical properties lookup table
-     real(r8):: enh_fct                           ! extinction/absorption enhancement factor for within-ice BC
-     real(r8):: tmp1                              ! temporary variable
-     !mgf--
-   #endif
+#ifdef MODAL_AER
+         !mgf++
+         integer :: idx_bcint_icerds                  ! index of ice effective radius for optical properties lookup table
+         integer :: idx_bcint_nclrds                  ! index of within-ice BC effective radius for optical properties lookup table
+         integer :: idx_bcext_nclrds                  ! index of external BC effective radius for optical properties lookup table
+         real(r8):: enh_fct                           ! extinction/absorption enhancement factor for within-ice BC
+         real(r8):: tmp1                              ! temporary variable
+         !mgf--
+#endif
 
      ! Enforce expected array sizes
      SHR_ASSERT_ALL((ubound(coszen)         == (/bounds%endc/)),                 errMsg(__FILE__, __LINE__))
@@ -1920,8 +1929,21 @@ contains
        ! Get current timestep
        nstep = get_nstep()
 
-       ! Loop over all non-urban columns
-       ! (when called from CSIM, there is only one column)
+       !Gaussian integration angle and coefficients for diffuse radiation
+       difgauspt(1:8)     & ! gaussian angles (radians)
+         = (/ 0.9894009_r8,  0.9445750_r8, &
+              0.8656312_r8,  0.7554044_r8, &
+              0.6178762_r8,  0.4580168_r8, &
+              0.2816036_r8,  0.0950125_r8/)
+       difgauswt(1:8)     & ! gaussian weights
+         = (/ 0.0271525_r8,  0.0622535_r8, &
+              0.0951585_r8,  0.1246290_r8, &
+              0.1495960_r8,  0.1691565_r8, &
+              0.1826034_r8,  0.1894506_r8/)
+
+
+      ! Loop over all non-urban columns
+      ! (when called from CSIM, there is only one column)
        do fc = 1,num_nourbanc
           c_idx = filter_nourbanc(fc)
 
@@ -1988,7 +2010,7 @@ contains
                 lon_coord         = 0
              endif ! end if flg_snw_ice == 1
 
-   #ifdef MODAL_AER
+#ifdef MODAL_AER
            !mgf++
            !
            ! Assume fixed BC effective radii of 100nm. This is close to
@@ -1999,7 +2021,7 @@ contains
            rds_bcint_lcl(:)  =  100._r8
            rds_bcext_lcl(:)  =  100._r8
            !mgf--
-   #endif
+#endif
 
              ! Set local aerosol array
              do j=1,sno_nbr_aer
@@ -2174,7 +2196,7 @@ contains
 
                    ! Weighted Mie parameters of each layer
                    do i=snl_top,snl_btm,1
-   #ifdef MODAL_AER
+#ifdef MODAL_AER
                     !mgf++ within-ice and external BC optical properties
                     !
                     ! Lookup table indices for BC optical properties,
@@ -2221,7 +2243,7 @@ contains
                     asm_prm_aer_lcl(2)       = asm_prm_bc2(bnd_idx,idx_bcext_nclrds)
                     ext_cff_mss_aer_lcl(2)   = ext_cff_mss_bc2(bnd_idx,idx_bcext_nclrds)
 
-   #else
+#else
                     ! bulk aerosol treatment (BC optical properties independent
                     ! of BC and ice grain size)
                     ! aerosol species 1 optical properties (within-ice BC)
@@ -2233,7 +2255,7 @@ contains
                     ss_alb_aer_lcl(2)        = ss_alb_bc2(bnd_idx)
                     asm_prm_aer_lcl(2)       = asm_prm_bc2(bnd_idx)
                     ext_cff_mss_aer_lcl(2)   = ext_cff_mss_bc2(bnd_idx)
-   #endif
+#endif
                     !mgf--
 
                       L_snw(i)   = h2osno_ice_lcl(i)+h2osno_liq_lcl(i)
@@ -2294,10 +2316,10 @@ contains
                    enddo
 
                    ! initialize top interface of top layer
-                   trndir(0) =   c1
-                   trntdr(0) =   c1
-                   trndif(0) =   c1
-                   rdndif(0) =   c0
+                   trndir(snl_top) = c1
+                   trntdr(snl_top) = c1
+                   trndif(snl_top) = c1
+                   rdndif(snl_top) = c0
 
                   ! begin main level loop
                   ! for layer interfaces except for the very bottom
@@ -2325,10 +2347,14 @@ contains
                         ws = omega_star(i)
                         gs = g_star(i)
 
-                        lm = el(ws,gs)
-                        ue = u(ws,gs,lm)
+                       ! Delta-Eddington solution expressions
+                        ! n(uu,et)         = ((uu+c1)*(uu+c1)/et ) - ((uu-c1)*(uu-c1)*et)
+                        ! u(w,gg,e)        = c1p5*(c1 - w*gg)/e
+                        ! el(w,gg)         = sqrt(c3*(c1-w)*(c1 - w*gg))
+                        lm = sqrt(c3*(c1-ws)*(c1 - ws*gs))  !lm = el(ws,gs)
+                        ue = c1p5*(c1 - ws*gs)/lm           !ue = u(ws,gs,lm)
                         extins = max(exp_min, exp(-lm*ts))
-                        ne = n(ue,extins)
+                        ne = ((ue+c1)*(ue+c1)/extins) - ((ue-c1)*(ue-c1)*extins) !ne = n(ue,extins)
 
                         ! first calculation of rdif, tdif using Delta-Eddington formulas
                         ! rdif_a(k) = (ue+c1)*(ue-c1)*(c1/extins - extins)/ne
@@ -2336,11 +2362,18 @@ contains
                         tdif_a(i) = c4*ue/ne
 
                         ! evaluate rdir,tdir for direct beam
-                        trnlay(i) = max(exp_min, exp(-ts/mu0n))
-                        alp = alpha(ws,mu_not,gs,lm)
-                        gam = agamm(ws,mu_not,gs,lm)
+                        trnlay(i) = max(exp_min, exp(-ts/mu_not))
+
+                        ! Delta-Eddington solution expressions
+                        ! alpha(w,uu,gg,e) = p75*w*uu*((c1 + gg*(c1-w))/(c1 - e*e*uu*uu))
+                        ! agamm(w,uu,gg,e) = p5*w*((c1 + c3*gg*(c1-w)*uu*uu)/(c1-e*e*uu*uu))
+                        ! alp = alpha(ws,mu_not,gs,lm)
+                        ! gam = agamm(ws,mu_not,gs,lm)
+                        alp = cp75*ws*mu_not*((c1 + gs*(c1-ws))/(c1 - lm*lm*mu_not*mu_not))
+                        gam = cp5*ws*((c1 + c3*gs*(c1-ws)*mu_not*mu_not)/(c1-lm*lm*mu_not*mu_not))
                         apg = alp + gam
                         amg = alp - gam
+
                         rdir(i) = apg*rdif_a(i) +  amg*(tdif_a(i)*trnlay(i) - c1)
                         tdir(i) = apg*tdif_a(i) + (amg* rdif_a(i)-apg+c1)*trnlay(i)
 
@@ -2354,12 +2387,14 @@ contains
                         smr = c0
                         smt = c0
                         do ng=1,ngmax
-                           mu  = gauspt(ng)
-                           gwt = gauswt(ng)
+                           mu  = difgauspt(ng)
+                           gwt = difgauswt(ng)
                            swt = swt + mu*gwt
                            trn = max(exp_min, exp(-ts/mu))
-                           alp = alpha(ws,mu,gs,lm)
-                           gam = agamm(ws,mu,gs,lm)
+                           ! alp = alpha(ws,mu,gs,lm)
+                           ! gam = agamm(ws,mu,gs,lm)
+                           alp = cp75*ws*mu*((c1 + gs*(c1-ws))/(c1 - lm*lm*mu*mu))
+                           gam = cp5*ws*((c1 + c3*gs*(c1-ws)*mu*mu)/(c1-lm*lm*mu*mu))
                            apg = alp + gam
                            amg = alp - gam
                            rdr = apg*R1 + amg*T1*trn - amg
@@ -2556,6 +2591,14 @@ contains
                 if (abs(energy_sum) > 0.00001_r8) then
                    write (iulog,"(a,e13.6,a,i6,a,i6)") "SNICAR ERROR: Energy conservation error of : ", energy_sum, &
                         " at timestep: ", nstep, " at column: ", c_idx
+                   write(iulog,*) "F_abs_sum: ",F_abs_sum
+                   write(iulog,*) "F_btm_net: ",F_btm_net
+                   write(iulog,*) "F_sfc_pls: ",F_sfc_pls
+                   write(iulog,*) "mu_not*pi*flx_slrd_lcl(bnd_idx): ", mu_not*pi*flx_slrd_lcl(bnd_idx)
+                   write(iulog,*) "flx_slri_lcl(bnd_idx)", flx_slri_lcl(bnd_idx)
+                   write(iulog,*) "bnd_idx", bnd_idx
+                   write(iulog,*) "F_abs", F_abs
+                   write(iulog,*) "albedo", albedo
                    call endrun(decomp_index=c_idx, clmlevel=namec, msg=errmsg(__FILE__, __LINE__))
                 endif
 
@@ -2618,7 +2661,7 @@ contains
              if ((mu_not < mu_75) .and. (flg_slr_in == 1)) then
                 sza_c1 = sza_a0 + sza_a1 * mu_not + sza_a2 * mu_not**2
                 sza_c0 = sza_b0 + sza_b1 * mu_not + sza_b2 * mu_not**2
-                sza_factor = sza_c1 * (log10(snw_rds_lcl(snl_top)) - c6) + sza_c0
+                sza_factor = sza_c1 * (log10(snw_rds_lcl(snl_top) * c1) - c6) + sza_c0
                 flx_sza_adjust  = albout(c_idx,2) * (sza_factor-c1) * sum(flx_wgt(nir_bnd_bgn:nir_bnd_end))
                 albout(c_idx,2) = albout(c_idx,2) * sza_factor
                 flx_abs(c_idx,snl_top,2) = flx_abs(c_idx,snl_top,2) - flx_sza_adjust
