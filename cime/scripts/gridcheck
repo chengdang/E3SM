@@ -1,0 +1,631 @@
+
+    =========================================
+    GRID naming convention
+    =========================================
+    The long grid name has the order atm,lnd,ocn/ice,river,mask,glc
+    The following shortname is used
+    a% => atm, l% => lnd, oi% => ocn/ice, r% => river, m% => mask, g% => glc, w% => wav
+    The notation is
+    a%name_l%name_oi%name_r%name_m%mask_g%name_w%name
+    Each grid is associated with three required elements and one optional element
+    longname      (a%name_l%name_oi%name_r%name_m%mask_g%name_w%name)
+    shortname     (for backwards compatibility)
+    alias         (even shorter notation than shortname) (optional)
+    support       (Description of the support level for this grid) (optional)
+    Each grid can also be associated with the following optional attributes
+    compset       (Regular expression for compsets that are required to match for this grid) (optional)
+   
+------------------------------------------------
+model grid: a%gx1v6_l%gx1v6_oi%gx1v6_r%rx1_m%gx1v6_g%null_w%null
+------------------------------------------------
+   short name: gx1v6_gx1v6
+   alias: g16_g16
+   compset match: DATM.+DROF
+------------------------------------------------
+model grid: a%CLM_USRDAT_l%CLM_USRDAT_oi%CLM_USRDAT_r%null_m%reg_g%null_w%null
+------------------------------------------------
+   short name: CLM_USRDAT
+   compset match: (DATM|SATM).+CLM
+------------------------------------------------
+model grid: a%1x1_numaIA_l%1x1_numaIA_oi%1x1_numaIA_r%null_m%reg_g%null_w%null
+------------------------------------------------
+   short name: 1x1_numaIA
+   compset match: DATM.+CLM
+------------------------------------------------
+model grid: a%1x1_brazil_l%1x1_brazil_oi%1x1_brazil_r%null_m%reg_g%null_w%null
+------------------------------------------------
+   short name: 1x1_brazil
+   compset match: DATM.+CLM
+------------------------------------------------
+model grid: a%1x1_smallvilleIA_l%1x1_smallvilleIA_oi%1x1_smallvilleIA_r%null_m%reg_g%null_w%null
+------------------------------------------------
+   short name: 1x1_smallvilleIA
+   compset match: (DATM|SATM).+CLM
+------------------------------------------------
+model grid: a%1x1_camdenNJ_l%1x1_camdenNJ_oi%1x1_camdenNJ_r%null_m%reg_g%null_w%null
+------------------------------------------------
+   short name: 1x1_camdenNJ
+   compset match: DATM.+CLM
+------------------------------------------------
+model grid: a%1x1_mexicocityMEX_l%1x1_mexicocityMEX_oi%1x1_mexicocityMEX_r%null_m%reg_g%null_w%null
+------------------------------------------------
+   short name: 1x1_mexicocityMEX
+   compset match: DATM.+CLM
+------------------------------------------------
+model grid: a%1x1_vancouverCAN_l%1x1_vancouverCAN_oi%1x1_vancouverCAN_r%null_m%reg_g%null_w%null
+------------------------------------------------
+   short name: 1x1_vancouverCAN
+   compset match: DATM.+CLM
+------------------------------------------------
+model grid: a%1x1_tropicAtl_l%1x1_tropicAtl_oi%1x1_tropicAtl_r%null_m%reg_g%null_w%null
+------------------------------------------------
+   short name: 1x1_tropicAtl
+   compset match: DATM.+CLM
+------------------------------------------------
+model grid: a%1x1_urbanc_alpha_l%1x1_urbanc_alpha_oi%1x1_urbanc_alpha_r%null_m%reg_g%null_w%null
+------------------------------------------------
+   short name: 1x1_urbanc_alpha
+   compset match: DATM.+CLM
+------------------------------------------------
+model grid: a%5x5_amazon_l%5x5_amazon_oi%5x5_amazon_r%null_m%reg_g%null_w%null
+------------------------------------------------
+   short name: 5x5_amazon
+   alias: 5amazon
+   compset match: DATM.+CLM
+------------------------------------------------
+model grid: a%360x720cru_l%360x720cru_oi%360x720cru_r%r05_m%360x720cru_g%null_w%null
+------------------------------------------------
+   short name: hcru_hcru
+   compset match: (DATM|SATM).+CLM
+------------------------------------------------
+model grid: a%NLDAS_l%NLDAS_oi%NLDAS_r%NLDAS_m%NLDAS_g%null_w%null
+------------------------------------------------
+   short name: NLDAS_NLDAS
+   compset match: (DATM_SATM).+CLM
+------------------------------------------------
+model grid: a%T31_l%T31_oi%gx3v7_r%r05_m%gx3v7_g%null_w%null
+------------------------------------------------
+   short name: T31_gx3v7
+   alias: T31_g37
+------------------------------------------------
+model grid: a%T31_l%T31_oi%T31_r%r05_m%gx3v7_g%null_w%null
+------------------------------------------------
+   short name: T31_T31
+   alias: T31_T31
+   compset match: (DOCN|XOCN|SOCN)
+------------------------------------------------
+model grid: a%T42_l%T42_oi%T42_r%r05_m%usgs_g%null_w%null
+------------------------------------------------
+   short name: T42_T42
+   alias: T42_T42
+   compset match: (DOCN|XOCN|SOCN)
+------------------------------------------------
+model grid: a%T62_l%T62_oi%gx3v7_r%rx1_m%gx3v7_g%null_w%null
+------------------------------------------------
+   short name: T62_gx3v7
+   alias: T62_g37
+   compset match: (DATM|XATM|SATM)
+------------------------------------------------
+model grid: a%T62_l%T62_oi%gx1v6_r%rx1_m%gx1v6_g%null_w%null
+------------------------------------------------
+   short name: T62_gx1v6
+   alias: T62_g16
+   compset match: (DATM|XATM|SATM)
+------------------------------------------------
+model grid: a%T62_l%T62_oi%mpas120_r%rx1_m%mpas120_g%null_w%null
+------------------------------------------------
+   short name: T62_mpas120
+   alias: T62_m120
+   compset match: (DATM|XATM|SATM)
+------------------------------------------------
+model grid: a%T62_l%T62_oi%mpasgx1_r%rx1_m%mpasgx1_g%null_w%null
+------------------------------------------------
+   short name: T62_mpasgx1
+   alias: T62_mgx1
+   compset match: (DATM|XATM|SATM)
+------------------------------------------------
+model grid: a%T62_l%T62_oi%oEC60to30_r%rx1_m%oEC60to30_g%null_w%null
+------------------------------------------------
+   short name: T62_oEC60to30
+   alias: T62_oEC60to30
+   compset match: (DATM|XATM|SATM)
+------------------------------------------------
+model grid: a%T62_l%T62_oi%oEC60to30v3_r%rx1_m%oEC60to30v3_g%null_w%null
+------------------------------------------------
+   short name: T62_oEC60to30v3
+   alias: T62_oEC60to30v3
+   compset match: (DATM|XATM|SATM)
+------------------------------------------------
+model grid: a%T62_l%T62_oi%oEC60to30wLI_r%rx1_m%oEC60to30wLI_g%null_w%null
+------------------------------------------------
+   short name: T62_oEC60to30wLI
+   alias: T62_oEC60to30wLI
+   compset match: (DATM|XATM|SATM)
+------------------------------------------------
+model grid: a%T62_l%T62_oi%oEC60to30v3wLI_r%rx1_m%oEC60to30v3wLI_g%null_w%null
+------------------------------------------------
+   short name: T62_oEC60to30v3wLI
+   alias: T62_oEC60to30v3wLI
+   compset match: (DATM|XATM|SATM)
+------------------------------------------------
+model grid: a%T62_l%T62_oi%oRRS30to10_r%rx1_m%oRRS30to10_g%null_w%null
+------------------------------------------------
+   short name: T62_oRRS30to10
+   alias: T62_oRRS30to10
+   compset match: (DATM|XATM|SATM)
+------------------------------------------------
+model grid: a%T62_l%T62_oi%oRRS30to10wLI_r%rx1_m%oRRS30to10wLI_g%null_w%null
+------------------------------------------------
+   short name: T62_oRRS30to10wLI
+   alias: T62_oRRS30to10wLI
+   compset match: (DATM|XATM|SATM)
+------------------------------------------------
+model grid: a%T62_l%T62_oi%oRRS30to10v3_r%rx1_m%oRRS30to10v3_g%null_w%null
+------------------------------------------------
+   short name: T62_oRRS30to10v3
+   alias: T62_oRRS30to10v3
+   compset match: (DATM|XATM|SATM)
+------------------------------------------------
+model grid: a%T62_l%T62_oi%oRRS30to10v3wLI_r%rx1_m%oRRS30to10v3wLI_g%null_w%null
+------------------------------------------------
+   short name: T62_oRRS30to10v3wLI
+   alias: T62_oRRS30to10v3wLI
+   compset match: (DATM|XATM|SATM)
+------------------------------------------------
+model grid: a%T62_l%T62_oi%oRRS18to6_r%rx1_m%oRRS18to6_g%null_w%null
+------------------------------------------------
+   short name: T62_oRRS18to6
+   alias: T62_oRRS18to6
+   compset match: (DATM|XATM|SATM)
+------------------------------------------------
+model grid: a%T62_l%T62_oi%oRRS18to6v3_r%rx1_m%oRRS18to6v3_g%null_w%null
+------------------------------------------------
+   short name: T62_oRRS18to6v3
+   alias: T62_oRRS18to6v3
+   compset match: (DATM|XATM|SATM)
+------------------------------------------------
+model grid: a%T62_l%T62_oi%oRRS15to5_r%rx1_m%oRRS15to5_g%null_w%null
+------------------------------------------------
+   short name: T62_oRRS15to5
+   alias: T62_oRRS15to5
+   compset match: (DATM|XATM|SATM)
+------------------------------------------------
+model grid: a%0.23x0.31_l%0.23x0.31_oi%gx1v6_r%r05_m%gx1v6_g%null_w%null
+------------------------------------------------
+   short name: 0.23x0.31_gx1v6
+   alias: f02_g16
+------------------------------------------------
+model grid: a%0.47x0.63_l%0.47x0.63_oi%gx1v6_r%r05_m%gx1v6_g%null_w%null
+------------------------------------------------
+   short name: 0.47x0.63_gx1v6
+   alias: f05_g16
+------------------------------------------------
+model grid: a%0.9x1.25_l%0.9x1.25_oi%gx1v6_r%r05_m%gx1v6_g%null_w%null
+------------------------------------------------
+   short name: 0.9x1.25_gx1v6
+   alias: f09_g16
+------------------------------------------------
+model grid: a%0.9x1.25_l%0.9x1.25_oi%mpas120_r%r05_m%mpas120_g%null_w%null
+------------------------------------------------
+   short name: 0.9x1.25_mpas120
+   alias: f09_m120
+------------------------------------------------
+model grid: a%0.9x1.25_l%0.9x1.25_oi%gx1v6_r%r05_m%gx1v6_g%null_w%ww3a
+------------------------------------------------
+   short name: 0.9x1.25_gx1v6
+   alias: f09_g16
+   compset match: SGLC.+DWAV
+------------------------------------------------
+model grid: a%1.9x2.5_l%1.9x2.5_oi%gx1v6_r%r05_m%gx1v6_g%null_w%null
+------------------------------------------------
+   short name: 1.9x2.5_gx1v6
+   alias: f19_g16
+------------------------------------------------
+model grid: a%1.9x2.5_l%1.9x2.5_oi%gx1v6_r%r05_m%gx1v6_g%null_w%ww3a
+------------------------------------------------
+   short name: 1.9x2.5_gx1v6
+   alias: f19_g16
+   compset match: SGLC.+DWAV
+------------------------------------------------
+model grid: a%4x5_l%4x5_oi%gx3v7_r%r05_m%gx3v7_g%null_w%null
+------------------------------------------------
+   short name: 4x5_gx3v7
+   alias: f45_g37
+------------------------------------------------
+model grid: a%1.9x2.5_l%1.9x2.5_oi%gx1v6_r%r01_m%gx1v6_g%null_w%null
+------------------------------------------------
+   short name: 1.9x2.5_gx1v6_r01
+   alias: f19_g16_r01
+------------------------------------------------
+model grid: a%0.23x0.31_l%0.23x0.31_oi%0.23x0.31_r%r05_m%gx1v6_g%null_w%null
+------------------------------------------------
+   short name: 0.23x0.31_0.23x0.31
+   alias: f02_f02
+   compset match: (DOCN|XOCN|SOCN|AQP1)
+------------------------------------------------
+model grid: a%0.9x1.25_l%0.9x1.25_oi%0.9x1.25_r%r05_m%gx1v6_g%null_w%null
+------------------------------------------------
+   short name: 0.9x1.25_0.9x1.25
+   alias: f09_f09
+   compset match: (DOCN|XOCN|SOCN|AQP1)
+------------------------------------------------
+model grid: a%1.9x2.5_l%1.9x2.5_oi%1.9x2.5_r%r05_m%gx1v6_g%null_w%null
+------------------------------------------------
+   short name: 1.9x2.5_1.9x2.5
+   alias: f19_f19
+   compset match: (DOCN|XOCN|SOCN|AQP1)
+------------------------------------------------
+model grid: a%2.5x3.33_l%2.5x3.33_oi%2.5x3.33_r%r05_m%gx1v6_g%null_w%null
+------------------------------------------------
+   short name: 2.5x3.33_2.5x3.33
+   alias: f25_f25
+   compset match: (DOCN|XOCN|SOCN|AQP1)
+------------------------------------------------
+model grid: a%4x5_l%4x5_oi%4x5_r%r05_m%gx3v7_g%null_w%null
+------------------------------------------------
+   short name: 4x5_4x5
+   alias: f45_f45
+   compset match: (DOCN|XOCN|SOCN|AQP1)
+------------------------------------------------
+model grid: a%10x15_l%10x15_oi%10x15_r%r05_m%usgs_g%null_w%null
+------------------------------------------------
+   short name: 10x15_10x15
+   alias: f10_f10
+   compset match: (DOCN|XOCN|SOCN|AQP1)
+------------------------------------------------
+model grid: a%ne4np4_l%ne4np4_oi%oQU240_r%r05_m%oQU240_g%null_w%null
+------------------------------------------------
+   short name: ne4np4_oQU240
+   alias: ne4_oQU240
+------------------------------------------------
+model grid: a%ne4np4_l%ne4np4_oi%oQU240wLI_r%r05_m%oQU240wLI_g%null_w%null
+------------------------------------------------
+   short name: ne4np4_oQU240wLI
+   alias: ne4_oQU240wLI
+------------------------------------------------
+model grid: a%ne11np4_l%ne11np4_oi%oQU240_r%r05_m%oQU240_g%null_w%null
+------------------------------------------------
+   short name: ne11np4_oQU240
+   alias: ne11_oQU240
+------------------------------------------------
+model grid: a%ne16np4_l%ne16np4_oi%gx3v7_r%r05_m%gx3v7_g%null_w%null
+------------------------------------------------
+   short name: ne16np4_gx3v7
+   alias: ne16_g37
+------------------------------------------------
+model grid: a%ne30np4_l%ne30np4_oi%gx1v6_r%r05_m%gx1v6_g%null_w%null
+------------------------------------------------
+   short name: ne30np4_gx1v6
+   alias: ne30_g16
+------------------------------------------------
+model grid: a%ne30np4_l%ne30np4_oi%mpas120_r%r05_m%mpas120_g%null_w%null
+------------------------------------------------
+   short name: ne30np4_mpas120
+   alias: ne30_m120
+------------------------------------------------
+model grid: a%ne30np4_l%ne30np4_oi%mpas120_r%r05_m%mpas120_g%mpas.gis20km_w%null
+------------------------------------------------
+   short name: ne30np4_mpas120_gis20
+   alias: ne30_m120_g
+------------------------------------------------
+model grid: a%ne30np4_l%1.9x2.5_oi%gx1v6_r%r05_m%gx1v6_g%null_w%null
+------------------------------------------------
+   short name: ne30np4_1.9x2.5_gx1v6
+   alias: ne30_f19_g16
+------------------------------------------------
+model grid: a%ne30np4_l%0.9x1.25_oi%gx1v6_r%r05_m%gx1v6_g%null_w%null
+------------------------------------------------
+   short name: ne30np4_0.9x1.25_gx1v6
+   alias: ne30_f09_g16
+------------------------------------------------
+model grid: a%ne60np4_l%ne60np4_oi%gx1v6_r%r05_m%gx1v6_g%null_w%null
+------------------------------------------------
+   short name: ne60np4_gx1v6
+   alias: ne60_g16
+------------------------------------------------
+model grid: a%ne120np4_l%ne120np4_oi%gx1v6_r%r05_m%gx1v6_g%null_w%null
+------------------------------------------------
+   short name: ne120np4_gx1v6
+   alias: ne120_g16
+------------------------------------------------
+model grid: a%ne120np4_l%ne120np4_oi%oRRS18to6_r%r0125_m%oRRS18to6_g%null_w%null
+------------------------------------------------
+   short name: ne120np4_oRRS18to6
+   alias: ne120_oRRS18
+------------------------------------------------
+model grid: a%ne120np4_l%ne120np4_oi%oRRS18to6v3_r%r0125_m%oRRS18to6v3_g%null_w%null
+------------------------------------------------
+   short name: ne120np4_oRRS18to6v3
+   alias: ne120_oRRS18v3
+------------------------------------------------
+model grid: a%ne120np4_l%ne120np4_oi%oRRS15to5_r%r0125_m%oRRS15to5_g%null_w%null
+------------------------------------------------
+   short name: ne120np4_oRRS15to5
+   alias: ne120_oRRS15
+------------------------------------------------
+model grid: a%ne240np4_l%0.23x0.31_oi%gx1v6_r%r05_m%gx1v6_g%null_w%null
+------------------------------------------------
+   short name: ne240np4_0.23x0.31_gx1v6
+   alias: ne240_f02_g16
+------------------------------------------------
+model grid: a%ne4np4_l%ne4np4_oi%ne4np4_r%r05_m%oQU240_g%null_w%null
+------------------------------------------------
+   short name: ne4np4_ne4np4
+   alias: ne4_ne4
+   compset match: (DOCN|XOCN|SOCN|AQP1)
+------------------------------------------------
+model grid: a%ne11np4_l%ne11np4_oi%ne11np4_r%r05_m%oQU240_g%null_w%null
+------------------------------------------------
+   short name: ne11np4_ne11np4
+   alias: ne11_ne11
+   compset match: (DOCN|XOCN|SOCN|AQP1)
+------------------------------------------------
+model grid:     a%ne0np4_arm_x8v3_lowcon_l%ne0np4_arm_x8v3_lowcon_oi%ne0np4_arm_x8v3_lowcon_r%null_m%gx1v6_g%null_w%null
+------------------------------------------------
+   short name: ne0np4_arm_x8v3_lowcon_ne0np4_arm_x8v3_lowcon
+   alias: armx8v3_armx8v3
+   compset match: (DOCN|XOCN|SOCN|AQP1)
+------------------------------------------------
+model grid:     a%ne0np4_conus_x4v1_lowcon_l%ne0np4_conus_x4v1_lowcon_oi%ne0np4_conus_x4v1_lowcon_r%null_m%tx0.1v2_g%null_w%null
+------------------------------------------------
+   short name: ne0np4_conus_x4v1_lowcon_ne0np4_conus_x4v1_lowcon
+   alias: conusx4v1_conusx4v1
+   compset match: (DOCN|XOCN|SOCN|AQP1)
+------------------------------------------------
+model grid:     a%ne0np4_svalbard_x8v1_lowcon_l%ne0np4_svalbard_x8v1_lowcon_oi%ne0np4_svalbard_x8v1_lowcon_r%null_m%tx0.1v2_g%null_w%null
+------------------------------------------------
+   short name: ne0np4_svalbard_x8v1_lowcon_ne0np4_svalbard_x8v1_lowcon
+   alias: svalbardx8v1_svalbardx8v1
+   compset match: (DOCN|XOCN|SOCN|AQP1)
+------------------------------------------------
+model grid:     a%ne0np4_sooberingoa_x4x8v1_lowcon_l%ne0np4_sooberingoa_x4x8v1_lowcon_oi%ne0np4_sooberingoa_x4x8v1_lowcon_r%null_m%tx0.1v2_g%null_w%null
+------------------------------------------------
+   short name: ne0np4_sooberingoa_x4x8v1_lowcon_ne0np4_sooberingoa_x4x8v1_lowcon
+   alias: sooberingoax4x8v1_sooberingoax4x8v1
+   compset match: (DOCN|XOCN|SOCN|AQP1)
+------------------------------------------------
+model grid: a%ne0np4_enax4v1_l%ne0np4_enax4v1_oi%ne0np4_enax4v1_r%null_m%oRRS18to6_g%null_w%null
+------------------------------------------------
+   short name: ne0np4_enax4v1_ne0np4_enax4v1
+   alias: enax4v1_enax4v1
+   compset match: (DOCN|XOCN|SOCN|AQP1)
+------------------------------------------------
+model grid: a%ne0np4_enax4v1_l%ne30np4_oi%ne0np4_enax4v1_r%null_m%oRRS18to6_g%null_w%null
+------------------------------------------------
+   short name: ne0np4_enax4v1_ne30np4_ne0np4_enax4v1
+   alias: enax4v1_ne30_enax4v1
+   compset match: (DOCN|XOCN|SOCN|AQP1)
+------------------------------------------------
+model grid: a%ne16np4_l%ne16np4_oi%ne16np4_r%r05_m%gx3v7_g%null_w%null
+------------------------------------------------
+   short name: ne16np4_ne16np4
+   alias: ne16_ne16
+   compset match: (DOCN|XOCN|SOCN|AQP1)
+------------------------------------------------
+model grid: a%ne30np4_l%ne30np4_oi%ne30np4_r%r05_m%gx1v6_g%null_w%null
+------------------------------------------------
+   short name: ne30np4_ne30np4
+   alias: ne30_ne30
+   compset match: (DOCN|XOCN|SOCN|AQP1)
+------------------------------------------------
+model grid: a%ne30np4_l%ne30np4_oi%oEC60to30_ICG_r%r05_m%oEC60to30_g%null_w%null
+------------------------------------------------
+   short name: ne30np4_oEC60to30_ICG
+   alias: ne30_oEC_ICG
+   compset match: (CAM5.+CLM.+MPASO%SPUNUP)
+------------------------------------------------
+model grid: a%ne30np4_l%ne30np4_oi%oEC60to30v3_ICG_r%r05_m%oEC60to30v3_g%null_w%null
+------------------------------------------------
+   short name: ne30np4_oEC60to30v3_ICG
+   alias: ne30_oECv3_ICG
+   compset match: (CAM5.+CLM.+MPASO%SPUNUP)
+------------------------------------------------
+model grid: a%ne30np4_l%ne30np4_oi%oEC60to30v3wLI_ICG_r%r05_m%oEC60to30v3wLI_g%null_w%null
+------------------------------------------------
+   short name: ne30np4_oEC60to30v3wLI_ICG
+   alias: ne30_oECv3wLI_ICG
+   compset match: (CAM5.+CLM.+MPASO%SPUNUP)
+------------------------------------------------
+model grid: a%ne120np4_l%ne120np4_oi%oRRS18to6v3_ICG_r%r0125_m%oRRS18to6v3_g%null_w%null
+------------------------------------------------
+   short name: ne120np4_oRRS18to6v3_ICG
+   alias: ne120_oRRS18v3_ICG
+   compset match: (CAM5.+CLM.+MPASO%SPUNUP)
+------------------------------------------------
+model grid: a%ne60np4_l%ne60np4_oi%ne60np4_r%r05_m%gx1v6_g%null_w%null
+------------------------------------------------
+   short name: ne60np4_ne60np4
+   alias: ne60_ne60
+   compset match: (DOCN|XOCN|SOCN|AQP1)
+------------------------------------------------
+model grid: a%ne120np4_l%ne120np4_oi%ne120np4_r%r05_m%gx1v6_g%null_w%null
+------------------------------------------------
+   short name: ne120np4_ne120np4
+   alias: ne120_ne120
+   compset match: (DOCN|XOCN|SOCN|AQP1)
+------------------------------------------------
+model grid: a%ne240np4_l%ne240np4_oi%ne240np4_r%null_m%gx1v6_g%null_w%null
+------------------------------------------------
+   short name: ne240np4_ne240np4
+   alias: ne240_ne240
+   compset match: (DOCN|XOCN|SOCN|AQP1)
+------------------------------------------------
+model grid: a%0.9x1.25_l%0.9x1.25_oi%gx1v6_r%r05_m%gx1v6_g%mpas.gis20km_w%null
+------------------------------------------------
+   short name: 0.9x1.25_gx1v6_gis20
+   alias: f09_g16_g
+   compset match: _MALI
+------------------------------------------------
+model grid: a%0.9x1.25_l%0.9x1.25_oi%gx1v6_r%r05_m%gx1v6_g%mpas.ais20km_w%null
+------------------------------------------------
+   short name: 0.9x1.25_gx1v6_ais20
+   alias: f09_g16_a
+   compset match: _MALI
+------------------------------------------------
+model grid: a%T62_l%T62_oi%mpas120_r%rx1_m%mpas120_g%mpas.gis20km_w%null
+------------------------------------------------
+   short name: T62_mpas120_gis20
+   alias: T62_m120_g
+   compset match: MPASO.*_MALI
+------------------------------------------------
+model grid: a%0.9x1.25_l%0.9x1.25_oi%oEC60to30_r%r05_m%oEC60to30_g%mpas.ais20km_w%null
+------------------------------------------------
+   short name: 0.9x1.25_oEC60to30_ais20
+   alias: f09_oEC_a
+   compset match: MPASO.*_MALI
+------------------------------------------------
+model grid: a%T31_l%T31_oi%gx3v7_r%rx1_m%gx3v7_g%null_w%null
+------------------------------------------------
+   short name: T31_gx3v7_rx1
+   alias: T31_g37_rx1
+   compset match: _DROF
+------------------------------------------------
+model grid: a%4x5_l%4x5_oi%gx3v7_r%rx1_m%gx3v7_g%null_w%null
+------------------------------------------------
+   short name: 4x5_gx3v7_rx1
+   alias: f45_g37_rx1
+   compset match: _DROF
+------------------------------------------------
+model grid: a%1.9x2.5_l%1.9x2.5_oi%gx1v6_r%rx1_m%gx1v6_g%null_w%null
+------------------------------------------------
+   short name: 1.9x2.5_gx1v6_rx1
+   alias: f19_g16_rx1
+   compset match: _DROF
+------------------------------------------------
+model grid: a%ne30np4_l%ne30np4_oi%gx1v6_r%rx1_m%gx1v6_g%null_w%null
+------------------------------------------------
+   short name: ne30np4_gx1v6_rx1
+   alias: ne30_g16_rx1
+   compset match: _DROF
+------------------------------------------------
+model grid: a%ne30np4_l%1.9x2.5_oi%gx1v6_r%rx1_m%gx1v6_g%null_w%null
+------------------------------------------------
+   short name: ne30np4_1.9x2.5_gx1v6_rx1
+   alias: ne30_f19_g16_rx1
+   compset match: _DROF
+------------------------------------------------
+model grid: a%ww3a_l%ww3a_oi%ww3a_r%null_m%ww3a_g%null_w%ww3a
+------------------------------------------------
+   short name: ww3a_ww3a
+   alias: ww3a_ww3a
+   compset match: _WW3
+------------------------------------------------
+model grid: a%1.9x2.5_l%1.9x2.5_oi%gx1v6_r%r05_m%gx1v6_g%null_w%ww3a
+------------------------------------------------
+   short name: 1.9x2.5_gx1v6_r05_ww3a
+   alias: f19_g16_r05_ww3
+   compset match: (_DWAV|_XWAV|_WW3)
+------------------------------------------------
+model grid: a%0.9x1.25_l%1.9x2.5_oi%gx1v6_r%r05_m%gx1v6_g%null_w%ww3a
+------------------------------------------------
+   short name: 0.9x1.25_gx1v6_r05_ww3a
+   alias: f09_g16_r05_ww3
+   compset match: (_DWAV|_XWAV|_WW3)
+------------------------------------------------
+model grid: a%T31_l%T31_oi%gx3v7_r%r05_m%gx3v7_g%null_w%ww3a
+------------------------------------------------
+   short name: T31_gx3v7_r05_ww3a
+   alias: T31_g37_r05_ww3
+   compset match: (_DWAV|_XWAV|_WW3)
+------------------------------------------------
+model grid: a%T31_l%T31_oi%gx3v7_r%rx1_m%gx3v7_g%null_w%ww3a
+------------------------------------------------
+   short name: T31_gx3v7_rx1_ww3a
+   alias: T31_g37_rx1_ww3>
+   compset match: (_DROF.*_DWAV|_DROF.*_WW3)
+------------------------------------------------
+model grid: a%T62_l%T62_oi%gx1v6_r%rx1_m%gx1v6_g%null_w%ww3a
+------------------------------------------------
+   short name: T62_gx1v6_rx1_ww3a
+   alias: T62_g16_rx1_ww3
+   compset match: (DATM.+DWAV|XATM.+XWAV|SATM.+SWAV)
+------------------------------------------------
+model grid: a%T62_l%T62_oi%oQU240_r%rx1_m%oQU240_g%null_w%null
+------------------------------------------------
+   short name: T62_oQU240
+   alias: T62_oQU240
+   compset match: (DATM|XATM|SATM)
+------------------------------------------------
+model grid: a%T62_l%T62_oi%oQU240wLI_r%rx1_m%oQU240wLI_g%null_w%null
+------------------------------------------------
+   short name: T62_oQU240wLI
+   alias: T62_oQU240wLI
+   compset match: (DATM|XATM|SATM)
+------------------------------------------------
+model grid: a%T62_l%T62_oi%oQU120_r%rx1_m%oQU120_g%null_w%null
+------------------------------------------------
+   short name: T62_oQU120
+   alias: T62_oQU120
+   compset match: (DATM|XATM|SATM)
+------------------------------------------------
+model grid: a%ne16np4_l%ne16np4_oi%oQU240_r%r05_m%oQU240_g%null_w%null
+------------------------------------------------
+   short name: ne16np4_oQU240
+   alias: ne16_oQU240
+------------------------------------------------
+model grid: a%ne16np4_l%ne16np4_oi%oQU240_r%r05_m%oQU240_g%mpas.ais20km_w%null
+------------------------------------------------
+   short name: ne16np4_oQU240_ais20
+   alias: ne16_oQU240_a
+------------------------------------------------
+model grid: a%ne30np4_l%ne30np4_oi%oQU120_r%r05_m%oQU120_g%null_w%null
+------------------------------------------------
+   short name: ne30np4_oQU120
+   alias: ne30_oQU120
+------------------------------------------------
+model grid: a%ne30np4_l%ne30np4_oi%oQU120_r%r05_m%oQU120_g%mpas.ais20km_w%null
+------------------------------------------------
+   short name: ne30np4_oQU120_ais20
+   alias: ne30_oQU120_a
+------------------------------------------------
+model grid: a%ne30np4_l%ne30np4_oi%oEC60to30_r%r05_m%oEC60to30_g%null_w%null
+------------------------------------------------
+   short name: ne30np4_oEC60to30
+   alias: ne30_oEC
+------------------------------------------------
+model grid: a%ne30np4_l%ne30np4_oi%oEC60to30v3_r%r05_m%oEC60to30v3_g%null_w%null
+------------------------------------------------
+   short name: ne30np4_oEC60to30v3
+   alias: ne30_oECv3
+------------------------------------------------
+model grid: a%ne30np4_l%ne30np4_oi%oEC60to30wLI_r%r05_m%oEC60to30wLI_g%null_w%null
+------------------------------------------------
+   short name: ne30np4_oEC60to30wLI
+   alias: ne30_oECwLI
+------------------------------------------------
+model grid: a%ne30np4_l%ne30np4_oi%oEC60to30v3wLI_r%r05_m%oEC60to30v3wLI_g%null_w%null
+------------------------------------------------
+   short name: ne30np4_oEC60to30v3wLI
+   alias: ne30_oECv3wLI
+------------------------------------------------
+model grid: a%ne30np4_l%ne30np4_oi%oRRS30to10_r%r05_m%oRRS30to10_g%null_w%null
+------------------------------------------------
+   short name: ne30np4_oRRS30to10
+   alias: ne30_oRRS30
+------------------------------------------------
+model grid: a%ne30np4_l%ne30np4_oi%oRRS30to10wLI_r%r05_m%oRRS30to10wLI_g%null_w%null
+------------------------------------------------
+   short name: ne30np4_oRRS30to10wLI
+   alias: ne30_oRRS30wLI
+------------------------------------------------
+model grid: a%ne30np4_l%ne30np4_oi%oRRS30to10v3_r%r05_m%oRRS30to10v3_g%null_w%null
+------------------------------------------------
+   short name: ne30np4_oRRS30to10v3
+   alias: ne30_oRRS30v3
+------------------------------------------------
+model grid: a%ne30np4_l%ne30np4_oi%oRRS30to10v3wLI_r%r05_m%oRRS30to10v3wLI_g%null_w%null
+------------------------------------------------
+   short name: ne30np4_oRRS30to10v3wLI
+   alias: ne30_oRRS30v3wLI
+------------------------------------------------
+model grid: a%ne0np4_twpx4v1_l%ne0np4_twpx4v1_oi%ne0np4_twpx4v1_r%null_m%oRRS18to6v3_g%null_w%null
+------------------------------------------------
+   short name: ne0np4_twpx4v1_ne0np4_twpx4v1
+   alias: twpx4v1_twpx4v1
+   compset match: (DOCN|XOCN|SOCN|AQP1)
+------------------------------------------------
+model grid: a%T62_l%T62_oi%oQU120_r%rx1_m%oQU120_g%mpas.ais20km_w%null
+------------------------------------------------
+   short name: T62_oQU120_ais20
+   alias: T62_oQU120_a
+   compset match: MPASO.*_MALI

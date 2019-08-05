@@ -23,3 +23,6 @@
 ! Set glc_do_dynglacier  with GLC_TWO_WAY_COUPLING               env variable
 !----------------------------------------------------------------------------------
 
+use_snicar_ad = .true.
+use_snicar_frc = .true.
+hist_fincl1 = 'SNOAERFRC2L','SNOAERFRCL','SNOBCFRC2L','SNOBCFRCL','SNODSTFRC2L','SNODSTFRCL'
